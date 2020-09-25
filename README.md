@@ -76,6 +76,7 @@ test_func('Jeff Tweedy', 'Wilco')
 > Read:
 <br>
 read(document_id: str = '', iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]
+
 - Reading 1 document via doc_id returns dict
 - optionally return timestamp in iso8601(defalut) or time since Micropython epoch
 (2000-01-01 00:00:00 UTC)
@@ -92,6 +93,7 @@ new_db_1.read(query_all=True) :: Returns Generator of all database documents
 > Filter:
 <br>
 filter(**kwargs) → Union[Generator,None]
+
 - Returns a generator or None if 0 matches
 - Accepts keyword arguments. Searches documents for all matches as an AND statement
 - accepts trailing wildcards within string

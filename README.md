@@ -119,7 +119,8 @@ new_db_1.filter(name__first='Thom')
 query = new_db_1.filter(age='5*')
 [i for i in query]
 
->>> [{'name': {'first': 'Jeff', 'last': 'Tweedy'}, 'device_id': 'ESP8266-device', 'timestamp': '2020-09-25T16:40:10+00:00', '_id': 'I2782', 'band': 'Wilco', 'age': 53}, {'name': {'first': 'Thom', 'last': 'Yorke'}, 'device_id': 'ESP8266-device', 'timestamp': '2020-09-25T14:49:00+00:00', '_id': 'I2973', 'band': 'Radiohead', 'age': 51}]
+>>> [{'name': {'first': 'Jeff', 'last': 'Tweedy'}, 'device_id': 'ESP8266-device', 'timestamp': '2020-09-25T16:40:10+00:00', '_id': 'I2782', 'band': 'Wilco', 'age': 53},
+{'name': {'first': 'Thom', 'last': 'Yorke'}, 'device_id': 'ESP8266-device', 'timestamp': '2020-09-25T14:49:00+00:00', '_id': 'I2973', 'band': 'Radiohead', 'age': 51}]
 ```
 
 > Delete:

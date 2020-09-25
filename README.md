@@ -138,3 +138,13 @@ new_db_1.delete('I2038')
 new_db_1.delete(drop_all=True)
 >>> '15 documents deleted'
 ```
+> Cleanup:
+<br>
+cleanup(seconds: int = None) -> str:
+- Delete all documents with a timestamp beyond specified seconds from time of function call.
+- Returns string message for # of documents deleted
+
+```
+new_db_1.cleanup(120)
+>>> '1 documents deleted'
+```

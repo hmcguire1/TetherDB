@@ -72,7 +72,7 @@ test_func('Jeff Tweedy', 'Wilco')
 
 > Read:
 <br>
-read(document_id: str = '', iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]
+> read(document_id: str = '', iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]
 - Reading 1 document via doc_id returns dict
 - optionally return timestamp in iso8601(defalut) or time since Micropython epoch
 (2000-01-01 00:00:00 UTC)

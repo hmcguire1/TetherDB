@@ -142,9 +142,9 @@ class Database(DBBase):
         '''
         query_set = []
 
-        def _queryset_append(document: dict) -> None:
+        def _queryset_append(document: dict, db_doc: dict) -> None:
             if document not in query_set:
-                query_set.append(document)
+                query_set.append(db_doc)
 
 
         def _wildcard_query(document: dict, key: str, value: any) -> None:
@@ -154,10 +154,10 @@ class Database(DBBase):
             return False
 
 
-        def _frozen_compare(keywords: dict, document: dict) -> bool:
+        def _frozen_compare(keywords: dict, document: dict, db_doc: dict) -> bool:
             if (frozenset(keywords.items()) & frozenset(document.items())
                     == set(keywords.items())):
-                _queryset_append(document)
+                _queryset_append(document, db_doc)
                 return True
             return False
 
@@ -170,7 +170,7 @@ class Database(DBBase):
             document_class = Document(db_doc)
             matched_kwargs = {}
 
-            if _frozen_compare(kwargs, document_class.__dict__):
+            if _frozen_compare(kwargs, document_class.__dict__, db_doc):
                 continue
             for key, value in kwargs.items():
                 if str(value).endswith('*'):
@@ -178,7 +178,7 @@ class Database(DBBase):
                     if match:
                         matched_kwargs[key] = document_class.__dict__[key]
             if matched_kwargs:
-                _frozen_compare(matched_kwargs, document_class.__dict__)
+                _frozen_compare(matched_kwargs, document_class.__dict__, db_doc)
 
         return ((document for document in query_set) if len(query_set) >= 1
                 else None)

@@ -29,7 +29,6 @@ Configuration
 - device_id: str :: Add a custom device_id attribute to document. Default: {sys.platform}-device
 - utc_offset: str :: Add utc_offset to timestamp (&#177;dd:dd): Default: '+00:00'
 - cleanup_seconds: int :: Add an integer to call cleanup function with no arguments.
-<br>
 
 Usage
 ---

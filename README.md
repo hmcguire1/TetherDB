@@ -29,7 +29,7 @@ Configuration
 - device_id: str :: Add a custom device_id attribute to document. Default: {sys.platform}-device
 - utc_offset: str :: Add utc_offset to timestamp (&#177;dd:dd): Default: '+00:00'
 - cleanup_seconds: int :: Add an integer to call cleanup function with no arguments.
-
+<br>
 Usage
 ---
 > Database Class:
@@ -47,10 +47,11 @@ str(new_db_1)
 str(new_db_2)
 'Database(db_filepath=test.db, db_len=0, utc_offset=None, cleanup_seconds=None)'
 ```
+<br>
 
 > Write:
 <br>
-: write(document: dict, device_id: bool = True) → None
+write(document: dict, device_id: bool = True) → None
 
 - Two methods of writing. Via instantiated database object or utils.tether decorator
 - Accepts a Dict type and option to add device_id.
@@ -72,7 +73,7 @@ test_func('Jeff Tweedy', 'Wilco')
 
 > Read:
 <br>
-: read(document_id: str = '', iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]
+read(document_id: str = '', iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]
 - Reading 1 document via doc_id returns dict
 - optionally return timestamp in iso8601(defalut) or time since Micropython epoch
 (2000-01-01 00:00:00 UTC)
@@ -88,7 +89,7 @@ new_db_1.read(query_all=True) :: Returns Generator of all database documents
 
 > Filter:
 <br>
-: filter(**kwargs) → Union[Generator,None]
+filter(**kwargs) → Union[Generator,None]
 - Returns a generator or None if 0 matches
 - Accepts keyword arguments. Searches documents for all matches as an AND statement
 - accepts trailing wildcards within string
@@ -120,7 +121,7 @@ query = new_db_1.filter(age='5*')
 
 > Delete:
 <br>
-: delete(doc_id: str = '', drop_all: bool = False) → str
+delete(doc_id: str = '', drop_all: bool = False) → str
 - Delete 1 or all documents in database
 - Returns string message for # of documents deleted
 

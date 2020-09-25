@@ -126,6 +126,7 @@ query = new_db_1.filter(age='5*')
 > Delete:
 <br>
 delete(doc_id: str = '', drop_all: bool = False) → str
+
 - Delete 1 or all documents in database
 - Returns string message for # of documents deleted
 
@@ -141,6 +142,7 @@ new_db_1.delete(drop_all=True)
 > Cleanup:
 <br>
 cleanup(seconds: int = None) -> str:
+
 - Delete all documents with a timestamp beyond specified seconds from time of function call.
 - Returns string message for # of documents deleted
 

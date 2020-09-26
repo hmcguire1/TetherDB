@@ -33,6 +33,7 @@ Usage
 > Database Class:
 <br>
 &nbsp;&nbsp;
+
 *Database(db_filepath: str = 'TetherDB/Tether.db') - > None*
 
 ```python
@@ -51,6 +52,7 @@ str(new_db_1)
 > Write:
 <br>
 &nbsp;&nbsp;
+
 *write(document: dict, device_id: bool = True) → None*
 
 - Two methods of writing. Via instantiated database object or utils.tether decorator
@@ -80,6 +82,7 @@ test_func('Jeff Tweedy', 'Wilco')
 > Read:
 <br>
 &nbsp;&nbsp;
+
 *read(document_id: str = '', iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]*
 
 - Reading 1 document via doc_id returns dict
@@ -98,6 +101,7 @@ new_db_1.read(query_all=True) :: Returns Generator of all database documents
 > Filter:
 <br>
 &nbsp;&nbsp;
+
 *filter(\*\*kwargs) → Union[Generator,None]*
 
 - Returns a generator or None if 0 matches
@@ -157,6 +161,7 @@ query = new_db_1.filter(age='5*')
 > Delete:
 <br>
 &nbsp;&nbsp;
+
 *delete(doc_id: str = '', drop_all: bool = False) → str*
 
 - Delete 1 or all documents in database
@@ -176,6 +181,7 @@ new_db_1.delete(drop_all=True)
 > Cleanup:
 <br>
 &nbsp;&nbsp;
+
 *cleanup(seconds: int = None) -> str:*
 
 - Delete all documents with a timestamp beyond specified seconds from time of function call.

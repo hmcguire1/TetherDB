@@ -28,8 +28,9 @@ Configuration
 - utc_offset(str): Add utc_offset to timestamp (&#177;dd:dd): Default -- '+00:00'
 - cleanup_seconds(int): Add an integer to call cleanup function with no arguments.
 
-Database Class
+Database
 ---
+
 &nbsp;&nbsp;*Database(db_filepath: str = 'TetherDB/Tether.db') - > None*
 
 ```python
@@ -51,7 +52,7 @@ del new_db_1[<_id>] -> None # delete documnet with _id
 ```
 <br>
 
-Class Methods
+Database Methods
 ---
 
 > Write:

@@ -5,7 +5,7 @@
 
 > Features:
 - Simple syntax
-- Works natively with MicroPython.
+- Works natively with MicroPython. Tested with v1.12, v1.13
 - Easily integrates into existing projects
 - Maintain multiple databases on a single device
 - Write and query nested objects

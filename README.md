@@ -25,7 +25,7 @@ rsync TetherDB /pyboard/TetherDB
 ```
 Configuration
 ---
-> Configuration filepath: TetherDB/config.json
+*Configuration filepath: TetherDB/config.json*
 - device_id(str): Add a custom device_id attribute to documents. Default -- {sys.platform}-device
 - utc_offset(str): Add utc_offset to timestamp (&#177;dd:dd): Default -- '+00:00'
 - cleanup_seconds(int): Add an integer to call cleanup function with no arguments.
@@ -35,7 +35,7 @@ Usage
 > Database Class:
 <br>
 &nbsp;&nbsp;
-Database(db_filepath: str = 'TetherDB/Tether.db') - > None
+*Database(db_filepath: str = 'TetherDB/Tether.db') - > None*
 
 ```python
 from TetherDB.db import Database
@@ -53,7 +53,7 @@ str(new_db_1)
 > Write:
 <br>
 &nbsp;&nbsp;
-write(document: dict, device_id: bool = True) → None
+*write(document: dict, device_id: bool = True) → None*
 
 - Two methods of writing. Via instantiated database object or utils.tether decorator
 - Accepts a Dict type for document
@@ -82,7 +82,7 @@ test_func('Jeff Tweedy', 'Wilco')
 > Read:
 <br>
 &nbsp;&nbsp;
-read(document_id: str = '', iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]
+*read(document_id: str = '', iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]*
 
 - Reading 1 document via doc_id returns dict
 - optionally return timestamp in iso8601 formate(default) or time since Micropython epoch
@@ -100,7 +100,7 @@ new_db_1.read(query_all=True) :: Returns Generator of all database documents
 > Filter:
 <br>
 &nbsp;&nbsp;
-filter(**kwargs) → Union[Generator,None]
+*filter(\*\*kwargs) → Union[Generator,None]*
 
 - Returns a generator or None if 0 matches
 - Accepts keyword arguments. Searches documents for all matches as an AND statement
@@ -159,7 +159,7 @@ query = new_db_1.filter(age='5*')
 > Delete:
 <br>
 &nbsp;&nbsp;
-delete(doc_id: str = '', drop_all: bool = False) → str
+*delete(doc_id: str = '', drop_all: bool = False) → str*
 
 - Delete 1 or all documents in database
 - Returns string message for # of documents deleted
@@ -178,7 +178,7 @@ new_db_1.delete(drop_all=True)
 > Cleanup:
 <br>
 &nbsp;&nbsp;
-cleanup(seconds: int = None) -> str:
+*cleanup(seconds: int = None) -> str:*
 
 - Delete all documents with a timestamp beyond specified seconds from time of function call.
 - Returns string message for # of documents deleted

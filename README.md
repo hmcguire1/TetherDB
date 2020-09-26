@@ -74,13 +74,14 @@ from TetherDB.utils import tether
 @tether() # No arguments uses default filepath and device_id added to documents
 def test_func(name: str, band: str):
     return dict(name=name, band=band)
-test_func('Adam Granduciel', 'The War On Drugs')
+test_func('Jeff Tweedy', 'Wilco')
+
 
 @tether(db_filepath='test.db', device_id='generic-esp')
 def test_func(name: str, band: str):
     return dict(name=name, band=band)
 
-test_func('Jeff Tweedy', 'Wilco')
+test_func('Adam Granduciel', 'The War On Drugs')
 ```
 <br>
 

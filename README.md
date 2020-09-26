@@ -51,7 +51,6 @@ new_db_1[<_id>] -> dict # get document with _id
 del new_db_1[<_id>] -> None # delete document with _id
 ```
 <br>
-
 Database Methods
 ---
 
@@ -90,13 +89,23 @@ test_func('Jeff Tweedy', 'Wilco')
 &nbsp;&nbsp;*read(document_id: str = '', iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]*
 
 - Reading 1 document via _id returns dict
-- optionally return timestamp in iso8601 formate(default) or time since Micropython epoch
-(2000-01-01 00:00:00 UTC)
+- optionally return timestamp in iso8601 format(default) or time since MicroPython epoch(2000-01-01 00:00:00 UTC)
 
 ```python
 #read 1 document :: Returns Dict
 new_db_1.read('I2038')
->>> {'name': {'first': 'Thom', 'last': 'Yorke'}, 'device_id': 'esp8266-device', 'timestamp': '2020-09-25T14:49:00-06:00', 'id': 'I2973', 'band': 'Radiohead', 'age': 51}
+>>>
+{
+	'name': {
+		'first': 'Thom',
+		'last': 'Yorke'
+	},
+	'device_id': 'esp8266-device',
+	'timestamp': '2020-09-25T14:49:00+00:00',
+	'_id': 'I2973',
+	'band': 'Radiohead',
+	'age': 51
+}
 
 new_db_1.read(query_all=True) :: Returns Generator of all database documents
 ```
@@ -106,10 +115,10 @@ new_db_1.read(query_all=True) :: Returns Generator of all database documents
 
 &nbsp;&nbsp;*filter(\*\*kwargs) → Union[Generator,None]*
 
-- Returns a generator or None if 0 matches
+- Returns a generator or None if 0 matches found
 - Accepts keyword arguments. Searches documents for all matches as an AND statement
-- accepts trailing wildcards within string
-- accepts nested object search via '__' delimeter
+- Accepts trailing wildcards within string
+- Accepts nested object search via '__' delimeter
 <br>
 
 ```python
@@ -117,8 +126,20 @@ new_db_1.read(query_all=True) :: Returns Generator of all database documents
 query = new_db_1.filter(age=51)
 [i for i in query]
 
->>> [{'name': {'first': 'Thom', 'last': 'Yorke'}, 'device_id': 'esp8266-device', 'timestamp': '2020-09-25T14:49:00+00:00', '_id': 'I2973', 'band': 'Radiohead', 'age': 51}]
-
+>>> 
+[
+	{
+		'name': {
+			'first': 'Thom',
+			'last': 'Yorke'
+		},
+		'device_id': 'esp8266-device',
+		'timestamp': '2020-09-25T14:49:00+00:00',
+		'_id': 'I2973',
+		'band': 'Radiohead',
+		'age': 51
+	}
+]
 # Multiple keywords = Returns same result
 new_db_1.filter(age=51, band='Radiohead')
 
@@ -132,7 +153,7 @@ new_db_1.filter(name__first='Thom')
 query = new_db_1.filter(age='5*')
 [i for i in query]
 
->>> #sorted for display. MicroPython json does not have a sort_keys argument.
+>>>
 [
     {
 		'_id': 'I2782',

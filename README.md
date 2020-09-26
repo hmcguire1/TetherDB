@@ -97,6 +97,7 @@ new_db_1.read('I2038')
 ```
 
 ```js
+>>>
 {
   'name': {
     'first': 'Thom',
@@ -131,6 +132,7 @@ query = new_db_1.filter(age=51)
 ```
 
 ```js
+>>>
 [
   {
   'name': {
@@ -161,6 +163,7 @@ query = new_db_1.filter(age='5*')
 ```
 
 ```js
+>>>
 [
   {
     '_id': 'I2782',

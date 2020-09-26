@@ -148,7 +148,7 @@ query = new_db_1.filter(age=51)
 ]
 ```
 ```python
-# Multiple keywords = Returns same result
+# Multiple keywords - Returns same result
 new_db_1.filter(age=51, band='Radiohead')
 
 #wilcard - Returns same result

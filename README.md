@@ -33,6 +33,7 @@ Configuration
 Usage
 ---
 > Database Class:
+<br>
 &nbsp;&nbsp;
 Database(db_filepath: str = 'TetherDB/Tether.db') - > None
 
@@ -50,6 +51,7 @@ str(new_db_1)
 <br>
 
 > Write:
+<br>
 &nbsp;&nbsp;
 write(document: dict, device_id: bool = True) → None
 
@@ -78,6 +80,7 @@ test_func('Jeff Tweedy', 'Wilco')
 <br>
 
 > Read:
+<br>
 &nbsp;&nbsp;
 read(document_id: str = '', iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]
 
@@ -154,6 +157,7 @@ query = new_db_1.filter(age='5*')
 <br>
 
 > Delete:
+<br>
 &nbsp;&nbsp;
 delete(doc_id: str = '', drop_all: bool = False) → str
 
@@ -172,6 +176,7 @@ new_db_1.delete(drop_all=True)
 <br>
 
 > Cleanup:
+<br>
 &nbsp;&nbsp;
 cleanup(seconds: int = None) -> str:
 

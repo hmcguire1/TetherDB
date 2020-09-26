@@ -46,8 +46,8 @@ str(new_db_1)
 Available magic methods:
 ```python
 len(new_db_1) -> int # of documents in database
-new_db_1[<doc_id>] -> dict # getter document with doc_id
-del new_db_1[<doc_id>] -> None # delete documnet with doc_id
+new_db_1[<_id>] -> dict # getter document with _id
+del new_db_1[<_id>] -> None # delete documnet with _id
 ```
 <br>
 

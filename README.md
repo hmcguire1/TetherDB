@@ -95,7 +95,7 @@ test_func('Jeff Tweedy', 'Wilco')
 #read 1 document :: Returns Dict
 new_db_1.read('I2038')
 ```
->>>
+
 ```js
 {
   'name': {
@@ -129,7 +129,7 @@ new_db_1.read(query_all=True) :: Returns Generator of all database documents
 query = new_db_1.filter(age=51)
 [i for i in query]
 ```
->>>
+
 ```js
 [
   {
@@ -159,7 +159,7 @@ new_db_1.filter(name__first='Thom')
 query = new_db_1.filter(age='5*')
 [i for i in query]
 ```
->>>
+
 ```js
 [
   {

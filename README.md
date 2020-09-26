@@ -1,5 +1,5 @@
 # TetherDB
-### A simple document database for MicroPython.
+### A simplistic document database for MicroPython.
 *A pure python library written for resource-limited devices such as ESP8266 & ESP32.*
 <br>
 

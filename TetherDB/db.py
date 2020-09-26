@@ -108,7 +108,7 @@ class Database(DBBase):
                             document = time_to_iso(loads(document), self.utc_offset)
                         else:
                             document = time_to_iso(loads(document))
-                    document['id'] = doc_id.decode()
+                    document['_id'] = doc_id.decode()
                     results = document
         elif query_all and not document_id:
             if iso_8601:
@@ -180,7 +180,7 @@ class Database(DBBase):
             if matched_kwargs:
                 _frozen_compare(matched_kwargs, document_class.__dict__, db_doc)
 
-        return ((document for document in query_set) if len(query_set) >= 1
+        return ((sorted(document) for document in query_set) if len(query_set) >= 1
                 else None)
 
     def cleanup(self, seconds: int = None) -> str:

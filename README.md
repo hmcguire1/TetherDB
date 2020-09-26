@@ -95,9 +95,6 @@ test_func('Adam Granduciel', 'The War On Drugs', 41)
 ```python
 #read 1 document :: Returns Dict
 new_db_1.read('I2038')
-```
-
-```js
 >>>
 {
   'name': {
@@ -110,8 +107,7 @@ new_db_1.read('I2038')
   'band': 'Radiohead',
   'age': 51
 }
-```
-```python
+
 new_db_1.read(query_all=True) :: Returns Generator of all database documents
 ```
 <br>
@@ -130,9 +126,6 @@ new_db_1.read(query_all=True) :: Returns Generator of all database documents
 #Single value
 query = new_db_1.filter(age=51)
 [i for i in query]
-```
-
-```js
 >>>
 [
   {
@@ -147,8 +140,7 @@ query = new_db_1.filter(age=51)
   'age': 51
   }
 ]
-```
-```python
+
 # Multiple keywords - Returns same result
 new_db_1.filter(age=51, band='Radiohead')
 
@@ -161,9 +153,6 @@ new_db_1.filter(name__first='Thom')
 #wilcard for int
 query = new_db_1.filter(age='5*')
 [i for i in query]
-```
-
-```js
 >>>
 [
   {

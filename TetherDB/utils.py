@@ -84,19 +84,19 @@ def generate_id(db_object: any) -> str:
     generate_id
     '''
     while True:
-        doc_id = ''.join(['I', str(getrandbits(12))])
-        if doc_id in db_object.keys():
+        _id = ''.join(['I', str(getrandbits(12))])
+        if _id in db_object.keys():
             generate_id(db_object)
             break
 
-        return doc_id
+        return _id
 
 
-def add_id(doc_id: str, document: dict) -> dict:
+def add_id(_id: str, document: dict) -> dict:
     '''
     add_id
     '''
-    document['_id'] = doc_id.decode()
+    document['_id'] = _id.decode()
 
     return document
 

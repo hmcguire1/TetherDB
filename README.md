@@ -88,7 +88,7 @@ test_func('Jeff Tweedy', 'Wilco')
 
 &nbsp;&nbsp;*read(document_id: str = '', iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]*
 
-- Reading 1 document via doc_id returns dict
+- Reading 1 document via _id returns dict
 - optionally return timestamp in iso8601 formate(default) or time since Micropython epoch
 (2000-01-01 00:00:00 UTC)
 
@@ -161,13 +161,13 @@ query = new_db_1.filter(age='5*')
 
 > Delete:
 
-&nbsp;&nbsp;*delete(doc_id: str = '', drop_all: bool = False) → str*
+&nbsp;&nbsp;*delete(_id: str = '', drop_all: bool = False) → str*
 
 - Delete 1 or all documents in database
 - Returns string message for # of documents deleted
 
 ```python
-# via doc_id
+# via _id
 new_db_1.delete('I2038')
 >>> '1 documents deleted'
 

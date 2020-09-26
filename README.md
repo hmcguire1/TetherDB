@@ -94,19 +94,22 @@ test_func('Jeff Tweedy', 'Wilco')
 ```python
 #read 1 document :: Returns Dict
 new_db_1.read('I2038')
+```
 >>>
+```json
 {
-	'name': {
-		'first': 'Thom',
-		'last': 'Yorke'
-	},
-	'device_id': 'esp8266-device',
-	'timestamp': '2020-09-25T14:49:00+00:00',
-	'_id': 'I2973',
-	'band': 'Radiohead',
-	'age': 51
+  'name': {
+    'first': 'Thom',
+    'last': 'Yorke'
+  },
+  'device_id': 'esp8266-device',
+  'timestamp': '2020-09-25T14:49:00+00:00',
+  '_id': 'I2973',
+  'band': 'Radiohead',
+  'age': 51
 }
-
+```
+```python
 new_db_1.read(query_all=True) :: Returns Generator of all database documents
 ```
 <br>
@@ -125,21 +128,24 @@ new_db_1.read(query_all=True) :: Returns Generator of all database documents
 #Single value
 query = new_db_1.filter(age=51)
 [i for i in query]
-
->>> 
+```
+>>>
+```json
 [
-	{
-		'name': {
-			'first': 'Thom',
-			'last': 'Yorke'
-		},
-		'device_id': 'esp8266-device',
-		'timestamp': '2020-09-25T14:49:00+00:00',
-		'_id': 'I2973',
-		'band': 'Radiohead',
-		'age': 51
-	}
+  {
+  'name': {
+      'first': 'Thom',
+	  'last': 'Yorke'
+  },
+  'device_id': 'esp8266-device',
+  'timestamp': '2020-09-25T14:49:00+00:00',
+  '_id': 'I2973',
+  'band': 'Radiohead',
+  'age': 51
+  }
 ]
+```
+```python
 # Multiple keywords = Returns same result
 new_db_1.filter(age=51, band='Radiohead')
 
@@ -152,31 +158,32 @@ new_db_1.filter(name__first='Thom')
 #wilcard for int
 query = new_db_1.filter(age='5*')
 [i for i in query]
-
+```
+```json
 >>>
 [
-    {
-		'_id': 'I2782',
-		'age': 53,
-		'band': 'Wilco',
-		'device_id': 'esp8266-device',
-		'name': {
-			'first': 'Jeff',
-			'last': 'Tweedy'
-		},
-		'timestamp': '2020-09-25T16:40:10+00:00'
+  {
+    '_id': 'I2782',
+    'age': 53,
+	'band': 'Wilco',
+	'device_id': 'esp8266-device',
+	'name': {
+	  'first': 'Jeff',
+	  'last': 'Tweedy'
 	},
-	{
-		'_id': 'I2973',
-		'age': 51,
-		'band': 'Radiohead',
-		'device_id': 'esp8266-device',
-		'name': {
-			'first': 'Thom',
-			'last': 'Yorke'
-		},
-		'timestamp': '2020-09-25T14:49:00+00:00'
-	}
+	'timestamp': '2020-09-25T16:40:10+00:00'
+  },
+  {
+	'_id': 'I2973',
+	'age': 51,
+	'band': 'Radiohead',
+	'device_id': 'esp8266-device',
+	'name': {
+	  'first': 'Thom',
+	  'last': 'Yorke'
+	},
+	'timestamp': '2020-09-25T14:49:00+00:00'
+  }
 ]
 ```
 <br>

@@ -72,16 +72,16 @@ new_db_1.write({'name': {'first': 'Thom', 'last': 'Yorke'}, 'age': 51, 'band': '
 from TetherDB.utils import tether
 
 @tether() # No arguments uses default filepath and device_id added to documents
-def test_func(name: str, band: str):
-    return dict(name=name, band=band)
-test_func('Jeff Tweedy', 'Wilco')
+def test_func(name: str, band: str, age: int):
+    return dict(name=name, band=band, age=age)
+test_func('Jeff Tweedy', 'Wilco', 53)
 
 
 @tether(db_filepath='test.db', device_id='generic-esp')
-def test_func(name: str, band: str):
-    return dict(name=name, band=band)
+def test_func(name: str, band: str, age:int):
+    return dict(name=name, band=band, age=age)
 
-test_func('Adam Granduciel', 'The War On Drugs')
+test_func('Adam Granduciel', 'The War On Drugs', 41)
 ```
 <br>
 

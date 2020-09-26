@@ -33,11 +33,11 @@ class Database(DBBase):
     def __len__(self):
         return self.db_len
 
-    def __getitem__(self, doc_id):
-        return self.read(doc_id)
+    def __getitem__(self, _id):
+        return self.read(_id)
 
-    def __delitem__(self, doc_id):
-        return self.delete(doc_id)
+    def __delitem__(self, _id):
+        return self.delete(_id)
 
     def _db_init(self):
         try:
@@ -59,31 +59,31 @@ class Database(DBBase):
         if not isinstance(document, dict):
             raise TypeError("Invalid type. Document must be of type 'dict'.")
 
-        doc_id = generate_id(self.db)
+        _id = generate_id(self.db)
         document.update(timestamp=time())
         if device_id:
             document.update(device_id=self.device_id)
 
-        self.db.put(doc_id, dumps(document).encode())
+        self.db.put(_id, dumps(document).encode())
         self.db_len += 1
         self.db.flush()
         sleep(0.01)
 
-    def delete(self, doc_id: str = '', drop_all: bool = False) -> str:
+    def delete(self, _id: str = '', drop_all: bool = False) -> str:
         '''
-        Deletes a single document with doc_id(int). drop_all param(boolean) drops all documents.
+        Deletes a single document with _id(int). drop_all param(boolean) drops all documents.
         Returns str of how many documents deleted.
         '''
-        if doc_id and not drop_all:
+        if _id and not drop_all:
             try:
-                del self.db[doc_id]
+                del self.db[_id]
                 self.db.flush()
                 self.db_len -= 1
                 documents_deleted = 1
             except KeyError:
-                return 'doc_id not found'
+                return '_id not found'
 
-        elif drop_all and not doc_id:
+        elif drop_all and not _id:
             documents_deleted = self.db_len
             self.db_len = 0
             self.db.close()
@@ -92,17 +92,17 @@ class Database(DBBase):
 
         return '{} documents deleted'.format(documents_deleted)
 
-    def read(self, document_id: str = '', iso_8601: bool = True,
+    def read(self, _id: str = '', iso_8601: bool = True,
              query_all: bool = False) -> any:
         '''
-        Can retrieve single record with document_id(str). Can also query
+        Can retrieve single record with _id(str). Can also query
         all records withquery_all(bool).
         '''
         results = None
 
-        if document_id and not query_all:
+        if _id and not query_all:
             for doc_id, document in self.db.items():
-                if document_id == doc_id.decode():
+                if _id == doc_id.decode():
                     if iso_8601:
                         if self.utc_offset:
                             document = time_to_iso(loads(document), self.utc_offset)
@@ -110,7 +110,7 @@ class Database(DBBase):
                             document = time_to_iso(loads(document))
                     document['_id'] = doc_id.decode()
                     results = document
-        elif query_all and not document_id:
+        elif query_all and not _id:
             if iso_8601:
                 if self.utc_offset:
                     results = (
@@ -128,10 +128,10 @@ class Database(DBBase):
                     for doc_id, document in self.db.items()
                 )
         else:
-            print('Provide document_id or query_all=True')
+            print('Provide _id or query_all=True')
 
         if not results:
-            return 'No documents found matching document_id'
+            return 'No documents found matching _id'
 
         return results
 
@@ -161,11 +161,11 @@ class Database(DBBase):
                 return True
             return False
 
-        for doc_id, db_doc in (doc for doc in self.db.items()):
+        for _id, db_doc in (doc for doc in self.db.items()):
             if self.utc_offset:
-                db_doc = time_to_iso(add_id(doc_id, loads(db_doc)), self.utc_offset)
+                db_doc = time_to_iso(add_id(_id, loads(db_doc)), self.utc_offset)
             else:
-                db_doc = time_to_iso(add_id(doc_id, loads(db_doc)))
+                db_doc = time_to_iso(add_id(_id, loads(db_doc)))
 
             document_class = Document(db_doc)
             matched_kwargs = {}
@@ -180,7 +180,7 @@ class Database(DBBase):
             if matched_kwargs:
                 _frozen_compare(matched_kwargs, document_class.__dict__, db_doc)
 
-        return ((sorted(document) for document in query_set) if len(query_set) >= 1
+        return ((document for document in query_set) if len(query_set) >= 1
                 else None)
 
     def cleanup(self, seconds: int = None) -> str:
@@ -198,9 +198,9 @@ class Database(DBBase):
 
         documents_deleted = 0
 
-        for doc_id, document in self.db.items():
+        for _id, document in self.db.items():
             if time() - loads(document)['timestamp'] >= seconds:
-                del self.db[doc_id]
+                del self.db[_id]
                 self.db_len -= 1
                 documents_deleted += 1
 

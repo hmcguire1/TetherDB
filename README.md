@@ -51,7 +51,9 @@ str(new_db_1)
 
 &nbsp;&nbsp;*write(document: dict, device_id: bool = True) → None*
 
-- Two methods of writing. Via instantiated database object or utils.tether decorator
+- Two methods of writing:
+    - instantiated database object
+    - utils.tether decorator
 - Accepts a Dict type for document
 - device_id accepts bool type for injecting device name into document
 

@@ -38,16 +38,17 @@ class Document:
         for key, value in dct.items():
             if isinstance(value, dict) and not parent:
                 self._set_attrs(value, parent=key)
-
             elif isinstance(value, dict):
                 key = '__'.join((parent, key),)
                 self._set_attrs(value, parent=key)
-
             elif parent:
                 key = '__'.join((parent, key),)
                 setattr(self, key, value)
             else:
-                setattr(self, key, value)
+                if isinstance(value, list):
+                    setattr(self, key, str(value))
+                else:
+                    setattr(self, key, value)
 
 
 def load_config():

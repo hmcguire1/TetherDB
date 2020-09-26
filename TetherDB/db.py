@@ -169,10 +169,17 @@ class Database(DBBase):
 
             document_class = Document(db_doc)
             matched_kwargs = {}
+            kw_items = {}
 
-            if _frozen_compare(kwargs, document_class.__dict__, db_doc):
-                continue
             for key, value in kwargs.items():
+                if isinstance(value, list):
+                    kw_items[key] = str(value)
+                else:
+                    kw_items[key] = value
+                if _frozen_compare(kw_items, document_class.__dict__, db_doc):
+                    continue
+
+            for key, value in kw_items.items():
                 if str(value).endswith('*'):
                     match = _wildcard_query(document_class.__dict__, key=key, value=value)
                     if match:

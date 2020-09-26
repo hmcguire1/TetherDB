@@ -28,10 +28,8 @@ Configuration
 - utc_offset(str): Add utc_offset to timestamp (&#177;dd:dd): Default -- '+00:00'
 - cleanup_seconds(int): Add an integer to call cleanup function with no arguments.
 
-Usage
+Database Class
 ---
-> Database Class:
-
 &nbsp;&nbsp;*Database(db_filepath: str = 'TetherDB/Tether.db') - > None*
 
 ```python
@@ -45,15 +43,24 @@ str(new_db_1)
 >>> str(new_db_2)
 'Database(db_filepath=test.db, db_len=0, utc_offset=None, cleanup_seconds=None)'
 ```
+Available magic methods:
+```python
+len(new_db_1) -> int # of documents in database
+new_db_1[<doc_id>] -> dict # getter document with doc_id
+del new_db_1[<doc_id>] -> None # delete documnet with doc_id
+```
 <br>
+
+Class Methods
+---
 
 > Write:
 
 &nbsp;&nbsp;*write(document: dict, device_id: bool = True) → None*
 
 - Two methods of writing:
-    - instantiated database object
-    - utils.tether decorator
+    - Instantiating a database object
+    - Tether decorator 
 - Accepts a Dict type for document
 - device_id accepts bool type for injecting device name into document
 

@@ -96,7 +96,7 @@ test_func('Jeff Tweedy', 'Wilco')
 new_db_1.read('I2038')
 ```
 >>>
-```json
+```js
 {
   'name': {
     'first': 'Thom',
@@ -130,7 +130,7 @@ query = new_db_1.filter(age=51)
 [i for i in query]
 ```
 >>>
-```json
+```js
 [
   {
   'name': {
@@ -159,8 +159,8 @@ new_db_1.filter(name__first='Thom')
 query = new_db_1.filter(age='5*')
 [i for i in query]
 ```
-```json
 >>>
+```js
 [
   {
     '_id': 'I2782',

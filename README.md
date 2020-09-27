@@ -58,7 +58,7 @@ del new_db_1[<_id>] -> None # delete document with _id
 Database Methods
 ---
 
-> Write:
+> **Write:**
 
 &nbsp;&nbsp;*write(document: dict, device_id: bool = True) → None*
 
@@ -88,7 +88,7 @@ def test_func(name: str, band: str, age:int):
 test_func('Adam Granduciel', 'The War On Drugs', 41)
 ```
 
-> Read:
+> **Read:**
 
 &nbsp;&nbsp;*read(document_id: str = '', iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]*
 
@@ -114,7 +114,7 @@ new_db_1.read('I2038')
 new_db_1.read(query_all=True) :: Returns Generator of all database documents
 ```
 
-> Filter:
+> **Filter:**
 
 &nbsp;&nbsp;*filter(\*\*kwargs) → Union[Generator,None]*
 
@@ -128,6 +128,7 @@ new_db_1.read(query_all=True) :: Returns Generator of all database documents
 #Single value
 query = new_db_1.filter(age=51)
 [i for i in query]
+
 >>>
 [
   {
@@ -155,6 +156,7 @@ new_db_1.filter(name__first='Thom')
 #wilcard for int
 query = new_db_1.filter(age='5*')
 [i for i in query]
+
 >>>
 [
   {
@@ -182,7 +184,7 @@ query = new_db_1.filter(age='5*')
 ]
 ```
 
-> Delete:
+> **Delete:**
 
 &nbsp;&nbsp;*delete(_id: str = '', drop_all: bool = False) → str*
 
@@ -199,7 +201,7 @@ new_db_1.delete(drop_all=True)
 >>> '15 documents deleted'
 ```
 
-> Cleanup:
+> **Cleanup:**
 
 &nbsp;&nbsp;*cleanup(seconds: int = None) -> str:*
 

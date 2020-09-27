@@ -152,13 +152,14 @@ class Database(DBBase):
                 return True
             return False
 
-        #BROKEN - doubling call due to kw_items
+
         def _frozen_compare(keywords: dict, document: dict, db_doc: dict) -> bool:
             if (frozenset(keywords.items()) & frozenset(document.items())
                     == set(keywords.items())):
                 _queryset_append(db_doc)
                 return True
             return False
+
 
         for _id, db_doc in (doc for doc in self.db.items()):
             if self.utc_offset:

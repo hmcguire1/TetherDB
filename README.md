@@ -48,12 +48,6 @@ str(new_db_2)
 str(new_db_3)
 >>> 'Database(db_filepath=TestDir/other_test.db, db_len=0, utc_offset=None, cleanup_seconds=None)'
 ```
-Available magic methods:
-```python
-len(new_db_1) -> int # of documents in database
-new_db_1[<_id>] -> dict # get document with _id
-del new_db_1[<_id>] -> None # delete document with _id
-```
 
 Database Methods
 ---
@@ -212,4 +206,11 @@ new_db_1.delete(drop_all=True)
 ```python
 new_db_1.cleanup(120)
 >>> '1 documents deleted'
+```
+
+Additional shorcuts:
+```python
+len(new_db_1) -> int # of documents in database
+new_db_1[<_id>] -> dict # get document with _id
+del new_db_1[<_id>] -> None # delete document with _id
 ```

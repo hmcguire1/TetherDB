@@ -19,7 +19,8 @@ class Database(DBBase):
         super().__init__()
         self.db_filepath = db_filepath
         self.db = self._db_init()
-        self.db_len = len([doc for doc in self.db.keys()])
+        if self.db:
+            self.db_len = len([doc for doc in self.db.keys()])
 
     def __repr__(self) -> str:
         return 'Database -> {}'.format(self.db_filepath)
@@ -40,6 +41,11 @@ class Database(DBBase):
         return self.delete(_id)
 
     def _db_init(self):
+        '''
+        This function intitializes the database file. If the specified
+        database file does not exist it creates it. If file is not located
+        in root directory, parent directories must already exist.
+        '''
         try:
             if (self.db_filepath.split('/')[-1] not in
                     listdir('/'.join([file for file in self.db_filepath.split('/')[0:-1]]))):
@@ -54,13 +60,17 @@ class Database(DBBase):
 
     def write(self, document: dict, device_id: bool = True) -> None:
         '''
-        Takes in dict event and write document to db filepath.
+        This Method takes in a dict to write a document to db_filepath.
+        The device_id argument allows adding a device id to documents.
+        This is True by default, if not set in config file it will be set
+        to '{sys.platform}-device'.
         '''
         if not isinstance(document, dict):
             raise TypeError("Invalid type. Document must be of type 'dict'.")
 
         _id = generate_id(self.db)
         document.update(timestamp=time())
+
         if device_id:
             document.update(device_id=self.device_id)
 
@@ -71,7 +81,8 @@ class Database(DBBase):
 
     def delete(self, _id: str = '', drop_all: bool = False) -> str:
         '''
-        Deletes a single document with _id(int). drop_all param(boolean) drops all documents.
+        This method can delete a single document with _id(int) param or can
+        delete all documents in database with drop_all(bool) param.
         Returns str of how many documents deleted.
         '''
         if _id and not drop_all:
@@ -95,19 +106,22 @@ class Database(DBBase):
     def read(self, _id: str = '', iso_8601: bool = True,
              query_all: bool = False) -> any:
         '''
-        Can retrieve single record with _id(str). Can also query
-        all records withquery_all(bool).
+        This method can either retrieve single document with _id(str) param or
+        can also query all documents in database with query_all(bool) param.
+        query_all returns a generator or None if 0 records in database.
         '''
         results = None
 
         if _id and not query_all:
             for doc_id, document in self.db.items():
+                db_doc = loads(document)
+
                 if _id == doc_id.decode():
                     if iso_8601:
                         if self.utc_offset:
-                            document = time_to_iso(loads(document), self.utc_offset)
+                            document = time_to_iso(db_doc, self.utc_offset)
                         else:
-                            document = time_to_iso(loads(document))
+                            document = time_to_iso(db_doc)
                     document['_id'] = doc_id.decode()
                     results = document
         elif query_all and not _id:
@@ -130,15 +144,15 @@ class Database(DBBase):
         else:
             print('Provide _id or query_all=True')
 
-        if not results:
-            return 'No documents found matching _id'
-
         return results
 
     def filter(self, **kwargs) -> any:
         '''
-        Filter takes in key value pairs to search via an 'AND' expression. It will return
-        documents containing all matching key and values. Also accepts trailing wilcards for values.
+        This method takes in key, value to search via an 'AND' expression.
+        It will return documents containing all matching key sand values. To
+        search nested objects use the '__' delimeter. Such as 'name__first'
+
+        Values can also be trailing wilcards within quotes.
         '''
         query_set = []
 
@@ -153,7 +167,7 @@ class Database(DBBase):
                 return True
             return False
 
-        #BROKEN - doubling call due to kw_items
+
         def _frozen_compare(keywords: dict, document: dict, db_doc: dict) -> bool:
             if (frozenset(keywords.items()) & frozenset(document.items())
                     == set(keywords.items())):
@@ -192,8 +206,10 @@ class Database(DBBase):
 
     def cleanup(self, seconds: int = None) -> str:
         '''
-        Purges database documents based on integer passed in either seconds
-        parameter or setting Database.cleanup_seconds.
+        This method purges database documents based on integer
+        passed in either seconds parameter or setting Database.cleanup_seconds.
+        Will delete records where timestamp is >= seconds passed from time method
+        is called.
         '''
         if self.cleanup_seconds:
             seconds = self.cleanup_seconds

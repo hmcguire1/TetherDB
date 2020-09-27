@@ -98,6 +98,7 @@ test_func('Adam Granduciel', 'The War On Drugs', 41)
 ```python
 #read 1 document :: Returns Dict
 new_db_1.read('I2038')
+
 >>>
 {
   'name': {

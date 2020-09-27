@@ -134,19 +134,17 @@ query = new_db_1.filter(age=51)
 ```
 *output:*
 ```
-[
-  {
-    'name': {
-      'first': 'Thom',
-	    'last': 'Yorke'
-    },
-    'device_id': 'esp8266-device',
-    '_id': 'I2973',
-    'band': 'Radiohead',
-    'age': 51,
-    'timestamp': '2020-09-25T14:49:00+00:00'
-  }
-]
+[{
+  'name': {
+    'first': 'Thom',
+    'last': 'Yorke'
+  },
+  'device_id': 'esp8266-device',
+  '_id': 'I2973',
+  'band': 'Radiohead',
+  'age': 51,
+  'timestamp': '2020-09-25T14:49:00+00:00'
+}]
 ```
 ```python
 # Multiple keywords - Returns same result
@@ -164,30 +162,28 @@ query = new_db_1.filter(age='5*')
 ```
 *output:*
 ```
-[
-  {
-    '_id': 'I2782',
-	  'band': 'Wilco',
-	  'device_id': 'esp8266-device',
-	  'name': {
-	    'first': 'Jeff',
-	    'last': 'Tweedy'
-	  },
-    'timestamp': '2020-09-25T16:40:10+00:00',
-    'age': 53
+[{
+  '_id': 'I2782',
+  'band': 'Wilco',
+  'device_id': 'esp8266-device',
+  'name': {
+    'first': 'Jeff',
+    'last': 'Tweedy'
   },
-  {
-	  '_id': 'I2973',
-	  'band': 'Radiohead',
-	  'device_id': 'esp8266-device',
-	  'name': {
-	    'first': 'Thom',
-	    'last': 'Yorke'
-    },
-    'timestamp': '2020-09-25T14:49:00+00:00,
-    'age': 51
-  }
-]
+  'timestamp': '2020-09-25T16:40:10+00:00',
+  'age': 53
+},
+{
+  '_id': 'I2973',
+  'band': 'Radiohead',
+  'device_id': 'esp8266-device',
+  'name': {
+    'first': 'Thom',
+    'last': 'Yorke'
+  },
+  'timestamp': '2020-09-25T14:49:00+00:00,
+  'age': 51
+}]
 ```
 
 > **Delete:**

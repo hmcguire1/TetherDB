@@ -100,7 +100,7 @@ test_func('Adam Granduciel', 'The War On Drugs', 41)
 new_db_1.read('I2038')
 ```
 *output:*
-```js
+```
 {
   'name': {
     'first': 'Thom',
@@ -133,7 +133,7 @@ query = new_db_1.filter(age=51)
 [i for i in query]
 ```
 *output:*
-```js
+```
 [
   {
   'name': {
@@ -163,7 +163,7 @@ query = new_db_1.filter(age='5*')
 [i for i in query]
 ```
 *output:*
-```js
+```
 [
   {
     '_id': 'I2782',

@@ -13,13 +13,14 @@ from .utils import (DBBase, Document, load_db, generate_id, add_id,
 
 class Database(DBBase):
     '''
-    Database class 
+    Database class
     '''
     def __init__(self, db_filepath: str = 'TetherDB/Tether.db') -> None:
         super().__init__()
         self.db_filepath = db_filepath
         self.db = self._db_init()
-        self.db_len = len([doc for doc in self.db.keys()])
+        if self.db:
+            self.db_len = len([doc for doc in self.db.keys()])
 
     def __repr__(self) -> str:
         return 'Database -> {}'.format(self.db_filepath)
@@ -41,7 +42,7 @@ class Database(DBBase):
 
     def _db_init(self):
         '''
-        This function intitializes the database file. If the specified 
+        This function intitializes the database file. If the specified
         database file does not exist it creates it. If file is not located
         in root directory, parent directories must already exist.
         '''
@@ -59,7 +60,7 @@ class Database(DBBase):
 
     def write(self, document: dict, device_id: bool = True) -> None:
         '''
-        This Method takes in a dict to write a document to db_filepath. 
+        This Method takes in a dict to write a document to db_filepath.
         The device_id argument allows adding a device id to documents.
         This is True by default, if not set in config file it will be set
         to '{sys.platform}-device'.
@@ -205,7 +206,7 @@ class Database(DBBase):
 
     def cleanup(self, seconds: int = None) -> str:
         '''
-        This method purges database documents based on integer 
+        This method purges database documents based on integer
         passed in either seconds parameter or setting Database.cleanup_seconds.
         Will delete records where timestamp is >= seconds passed from time method
         is called.

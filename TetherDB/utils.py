@@ -10,7 +10,8 @@ from random import getrandbits
 
 class DBBase:
     '''
-    Database Base Class
+    This class is inherited by the main Database class. It provides
+    the Database class with board & MicroPython specific properties.
     '''
     def __init__(self):
         self.config = load_config()
@@ -141,8 +142,8 @@ def time_to_iso(document: dict, utc_offset: str = '') -> dict:
 
 def tether(db_filepath: str = '', device_id: bool = True):
     '''
-    Decorator that takes in a function that returns dict and writes to 
-    database. Optiionally can specify db_filepath and enable/disable 
+    Decorator that takes in a function that returns dict and writes to
+    database. Optiionally can specify db_filepath and enable/disable
     device_id in document.
     '''
     def wrapper(func):

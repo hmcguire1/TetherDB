@@ -15,6 +15,7 @@ class Database(DBBase):
     '''
     The Database class is the main entrypoint for working with local database.
     The path defaults to TetherDB/Tether.db with no arumunets passed.
+    It inherits from DBBase which provides board specific properties.
     Optionally takes a str as the sole argument to the path where the db
     file will be stored. If the specified file does not exist it creates it.
     If file is not located in root directory, parent dirs must already exist.

@@ -102,11 +102,10 @@ new_db_1.read('I2038')
 *output:*
 ```
 {
-  'name': 
-    {
-      'first': 'Thom',
-      'last': 'Yorke'
-    },
+  'name': {
+    'first': 'Thom',
+    'last': 'Yorke'
+  },
   'device_id': 'esp8266-device',
   '_id': 'I2973',
   'band': 'Radiohead',
@@ -137,16 +136,15 @@ query = new_db_1.filter(age=51)
 ```
 [
   {
-  'name': 
-    {
+    'name': {
       'first': 'Thom',
 	    'last': 'Yorke'
     },
-  'device_id': 'esp8266-device',
-  '_id': 'I2973',
-  'band': 'Radiohead',
-  'age': 51,
-  'timestamp': '2020-09-25T14:49:00+00:00'
+    'device_id': 'esp8266-device',
+    '_id': 'I2973',
+    'band': 'Radiohead',
+    'age': 51,
+    'timestamp': '2020-09-25T14:49:00+00:00'
   }
 ]
 ```
@@ -172,11 +170,10 @@ query = new_db_1.filter(age='5*')
     'age': 53,
 	  'band': 'Wilco',
 	  'device_id': 'esp8266-device',
-	  'name': 
-      {
-	      'first': 'Jeff',
-	      'last': 'Tweedy'
-	    },
+	  'name': {
+	    'first': 'Jeff',
+	    'last': 'Tweedy'
+	  },
     'timestamp': '2020-09-25T16:40:10+00:00'
   },
   {
@@ -184,11 +181,10 @@ query = new_db_1.filter(age='5*')
 	  'age': 51,
 	  'band': 'Radiohead',
 	  'device_id': 'esp8266-device',
-	  'name': 
-      {
-	      'first': 'Thom',
-	      'last': 'Yorke'
-      },
+	  'name': {
+	    'first': 'Thom',
+	    'last': 'Yorke'
+    },
     'timestamp': '2020-09-25T14:49:00+00:00'
   }
 ]

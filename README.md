@@ -100,12 +100,13 @@ test_func('Adam Granduciel', 'The War On Drugs', 41)
 new_db_1.read('I2038')
 ```
 *output:*
-```
+```js
 {
-  'name': {
-    'first': 'Thom',
-    'last': 'Yorke'
-  },
+  'name': 
+    {
+      'first': 'Thom',
+      'last': 'Yorke'
+    },
   'device_id': 'esp8266-device',
   '_id': 'I2973',
   'band': 'Radiohead',
@@ -133,13 +134,14 @@ query = new_db_1.filter(age=51)
 [i for i in query]
 ```
 *output:*
-```
+```js
 [
   {
-  'name': {
+  'name': 
+    {
       'first': 'Thom',
-	  'last': 'Yorke'
-  },
+	    'last': 'Yorke'
+    },
   'device_id': 'esp8266-device',
   '_id': 'I2973',
   'band': 'Radiohead',
@@ -163,17 +165,18 @@ query = new_db_1.filter(age='5*')
 [i for i in query]
 ```
 *output:*
-```
+```js
 [
   {
     '_id': 'I2782',
     'age': 53,
 	  'band': 'Wilco',
 	  'device_id': 'esp8266-device',
-	  'name': {
-	    'first': 'Jeff',
-	    'last': 'Tweedy'
-	  },
+	  'name': 
+      {
+	      'first': 'Jeff',
+	      'last': 'Tweedy'
+	    },
     'timestamp': '2020-09-25T16:40:10+00:00'
   },
   {
@@ -181,10 +184,11 @@ query = new_db_1.filter(age='5*')
 	  'age': 51,
 	  'band': 'Radiohead',
 	  'device_id': 'esp8266-device',
-	  'name': {
-	    'first': 'Thom',
-	    'last': 'Yorke'
-    },
+	  'name': 
+      {
+	      'first': 'Thom',
+	      'last': 'Yorke'
+      },
     'timestamp': '2020-09-25T14:49:00+00:00'
   }
 ]

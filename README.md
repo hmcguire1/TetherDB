@@ -24,8 +24,8 @@ rsync TetherDB /pyboard/TetherDB
 Configuration
 ---
 *Configuration filepath: TetherDB/config.json*
-- device_id(str): Add a custom device_id attribute to documents. Default -- {sys.platform}-device
-- utc_offset(str): Add utc_offset to timestamp (&#177;dd:dd): Default -- '+00:00'
+- device_id(str): Add a custom device_id attribute to documents. Defaults to {sys.platform}-device
+- utc_offset(str): Add utc_offset to timestamp (&#177;dd:dd): Defaults to '+00:00'
 - cleanup_seconds(int): Add an integer to call cleanup function with no arguments.
 
 Database
@@ -37,12 +37,16 @@ Database
 from TetherDB.db import Database
 new_db_1 = Database() #Default filepath of ('TetherDB/Tether.db')
 new_db_2 = Database('test.db') #root dir
+new_db_3 = Database('TestDir/other_test.db') # parent dirs must exist prior to database file creation
 
 str(new_db_1)
 >>> 'Database(db_filepath=TetherDB/Tether.db, db_len=0, utc_offset=None, cleanup_seconds=None)'
 
->>> str(new_db_2)
-'Database(db_filepath=test.db, db_len=0, utc_offset=None, cleanup_seconds=None)'
+str(new_db_2)
+>>> 'Database(db_filepath=test.db, db_len=0, utc_offset=None, cleanup_seconds=None)'
+
+str(new_db_3)
+>>> 'Database(db_filepath=TestDir/other_test.db, db_len=0, utc_offset=None, cleanup_seconds=None)'
 ```
 Available magic methods:
 ```python
@@ -50,7 +54,7 @@ len(new_db_1) -> int # of documents in database
 new_db_1[<_id>] -> dict # get document with _id
 del new_db_1[<_id>] -> None # delete document with _id
 ```
-<br>
+
 Database Methods
 ---
 
@@ -83,7 +87,6 @@ def test_func(name: str, band: str, age:int):
 
 test_func('Adam Granduciel', 'The War On Drugs', 41)
 ```
-<br>
 
 > Read:
 
@@ -110,7 +113,6 @@ new_db_1.read('I2038')
 
 new_db_1.read(query_all=True) :: Returns Generator of all database documents
 ```
-<br>
 
 > Filter:
 
@@ -179,7 +181,6 @@ query = new_db_1.filter(age='5*')
   }
 ]
 ```
-<br>
 
 > Delete:
 
@@ -197,7 +198,6 @@ new_db_1.delete('I2038')
 new_db_1.delete(drop_all=True)
 >>> '15 documents deleted'
 ```
-<br>
 
 > Cleanup:
 

@@ -99,7 +99,6 @@ test_func('Adam Granduciel', 'The War On Drugs', 41)
 #read 1 document :: Returns Dict
 new_db_1.read('I2038')
 
->>>
 {
   'name': {
     'first': 'Thom',
@@ -130,7 +129,6 @@ new_db_1.read(query_all=True) :: Returns Generator of all database documents
 query = new_db_1.filter(age=51)
 [i for i in query]
 
->>>
 [
   {
   'name': {
@@ -158,7 +156,6 @@ new_db_1.filter(name__first='Thom')
 query = new_db_1.filter(age='5*')
 [i for i in query]
 
->>>
 [
   {
     '_id': 'I2782',

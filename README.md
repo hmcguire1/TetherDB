@@ -37,7 +37,7 @@ Database
 from TetherDB.db import Database
 new_db_1 = Database() #Default filepath of ('TetherDB/Tether.db')
 new_db_2 = Database('test.db') #root dir
-new_db_3 = Database('TestDir/other_test.db') # parent dirs must exist prior to database file creation
+new_db_3 = Database('TestDir/other_test.db') #parent dirs must exist prior to database file creation
 
 str(new_db_1)
 >>> 'Database(db_filepath=TetherDB/Tether.db, db_len=0, utc_offset=None, cleanup_seconds=None)'
@@ -58,7 +58,7 @@ Database Methods
 
 - Two methods of writing:
     - Instantiating a database object
-    - Tether decorator 
+    - Tether decorator
 - Accepts a Dict type for document
 - device_id accepts bool type for injecting device name into document
 

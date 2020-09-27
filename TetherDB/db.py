@@ -13,7 +13,11 @@ from .utils import (DBBase, Document, load_db, generate_id, add_id,
 
 class Database(DBBase):
     '''
-    Database class
+    The Database class is the main entrypoint for working with local database.
+    The path defaults to TetherDB/Tether.db with no arumunets passed.
+    Optionally takes a str as the sole argument to the path where the db
+    file will be stored. If the specified file does not exist it creates it.
+    If file is not located in root directory, parent dirs must already exist.
     '''
     def __init__(self, db_filepath: str = 'TetherDB/Tether.db') -> None:
         super().__init__()

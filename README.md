@@ -25,7 +25,7 @@ Configuration
 ---
 *Configuration filepath: TetherDB/config.json*
 - device_id(str): Add a custom device_id attribute to documents. Defaults to {sys.platform}-device
-- utc_offset(str): Add utc_offset to timestamp (&#177;dd:dd): Defaults to '+00:00'
+- utc_offset(str): Add utc_offset to timestamp (&#177;dd:dd). Defaults to '+00:00'
 - cleanup_seconds(int): Add an integer to call cleanup function with no arguments.
 
 Database

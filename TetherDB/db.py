@@ -142,8 +142,8 @@ class Database(DBBase):
         '''
         query_set = []
 
-        def _queryset_append(document: dict, db_doc: dict) -> None:
-            if document not in query_set:
+        def _queryset_append(db_doc: dict) -> None:
+            if db_doc not in query_set:
                 query_set.append(db_doc)
 
 
@@ -153,11 +153,11 @@ class Database(DBBase):
                 return True
             return False
 
-
+        #BROKEN - doubling call due to kw_items
         def _frozen_compare(keywords: dict, document: dict, db_doc: dict) -> bool:
             if (frozenset(keywords.items()) & frozenset(document.items())
                     == set(keywords.items())):
-                _queryset_append(document, db_doc)
+                _queryset_append(db_doc)
                 return True
             return False
 

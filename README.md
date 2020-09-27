@@ -28,8 +28,9 @@ Configuration
 - utc_offset(str): Add utc_offset to timestamp (&#177;dd:dd): Default -- '+00:00'
 - cleanup_seconds(int): Add an integer to call cleanup function with no arguments.
 
-Database Class
+Database
 ---
+
 &nbsp;&nbsp;*Database(db_filepath: str = 'TetherDB/Tether.db') - > None*
 
 ```python
@@ -46,12 +47,11 @@ str(new_db_1)
 Available magic methods:
 ```python
 len(new_db_1) -> int # of documents in database
-new_db_1[<_id>] -> dict # getter document with _id
-del new_db_1[<_id>] -> None # delete documnet with _id
+new_db_1[<_id>] -> dict # get document with _id
+del new_db_1[<_id>] -> None # delete document with _id
 ```
 <br>
-
-Class Methods
+Database Methods
 ---
 
 > Write:
@@ -72,15 +72,16 @@ new_db_1.write({'name': {'first': 'Thom', 'last': 'Yorke'}, 'age': 51, 'band': '
 from TetherDB.utils import tether
 
 @tether() # No arguments uses default filepath and device_id added to documents
-def test_func(name: str, band: str):
-    return dict(name=name, band=band)
-test_func('Adam Granduciel', 'The War On Drugs')
+def test_func(name: str, band: str, age: int):
+    return dict(name=name, band=band, age=age)
+test_func('Jeff Tweedy', 'Wilco', 53)
+
 
 @tether(db_filepath='test.db', device_id='generic-esp')
-def test_func(name: str, band: str):
-    return dict(name=name, band=band)
+def test_func(name: str, band: str, age:int):
+    return dict(name=name, band=band, age=age)
 
-test_func('Jeff Tweedy', 'Wilco')
+test_func('Adam Granduciel', 'The War On Drugs', 41)
 ```
 <br>
 
@@ -89,13 +90,23 @@ test_func('Jeff Tweedy', 'Wilco')
 &nbsp;&nbsp;*read(document_id: str = '', iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]*
 
 - Reading 1 document via _id returns dict
-- optionally return timestamp in iso8601 formate(default) or time since Micropython epoch
-(2000-01-01 00:00:00 UTC)
+- optionally return timestamp in iso8601 format(default) or time since MicroPython epoch(2000-01-01 00:00:00 UTC)
 
 ```python
 #read 1 document :: Returns Dict
 new_db_1.read('I2038')
->>> {'name': {'first': 'Thom', 'last': 'Yorke'}, 'device_id': 'esp8266-device', 'timestamp': '2020-09-25T14:49:00-06:00', 'id': 'I2973', 'band': 'Radiohead', 'age': 51}
+>>>
+{
+  'name': {
+    'first': 'Thom',
+    'last': 'Yorke'
+  },
+  'device_id': 'esp8266-device',
+  'timestamp': '2020-09-25T14:49:00+00:00',
+  '_id': 'I2973',
+  'band': 'Radiohead',
+  'age': 51
+}
 
 new_db_1.read(query_all=True) :: Returns Generator of all database documents
 ```
@@ -105,20 +116,32 @@ new_db_1.read(query_all=True) :: Returns Generator of all database documents
 
 &nbsp;&nbsp;*filter(\*\*kwargs) → Union[Generator,None]*
 
-- Returns a generator or None if 0 matches
+- Returns a generator or None if 0 matches found
 - Accepts keyword arguments. Searches documents for all matches as an AND statement
-- accepts trailing wildcards within string
-- accepts nested object search via '__' delimeter
+- Accepts trailing wildcards within string
+- Accepts nested object search via '__' delimeter
 <br>
 
 ```python
 #Single value
 query = new_db_1.filter(age=51)
 [i for i in query]
+>>>
+[
+  {
+  'name': {
+      'first': 'Thom',
+	  'last': 'Yorke'
+  },
+  'device_id': 'esp8266-device',
+  'timestamp': '2020-09-25T14:49:00+00:00',
+  '_id': 'I2973',
+  'band': 'Radiohead',
+  'age': 51
+  }
+]
 
->>> [{'name': {'first': 'Thom', 'last': 'Yorke'}, 'device_id': 'esp8266-device', 'timestamp': '2020-09-25T14:49:00+00:00', '_id': 'I2973', 'band': 'Radiohead', 'age': 51}]
-
-# Multiple keywords = Returns same result
+# Multiple keywords - Returns same result
 new_db_1.filter(age=51, band='Radiohead')
 
 #wilcard - Returns same result
@@ -130,31 +153,30 @@ new_db_1.filter(name__first='Thom')
 #wilcard for int
 query = new_db_1.filter(age='5*')
 [i for i in query]
-
->>> #sorted for display. MicroPython json does not have a sort_keys argument.
+>>>
 [
-    {
-		'_id': 'I2782',
-		'age': 53,
-		'band': 'Wilco',
-		'device_id': 'esp8266-device',
-		'name': {
-			'first': 'Jeff',
-			'last': 'Tweedy'
-		},
-		'timestamp': '2020-09-25T16:40:10+00:00'
+  {
+    '_id': 'I2782',
+    'age': 53,
+	'band': 'Wilco',
+	'device_id': 'esp8266-device',
+	'name': {
+	  'first': 'Jeff',
+	  'last': 'Tweedy'
 	},
-	{
-		'_id': 'I2973',
-		'age': 51,
-		'band': 'Radiohead',
-		'device_id': 'esp8266-device',
-		'name': {
-			'first': 'Thom',
-			'last': 'Yorke'
-		},
-		'timestamp': '2020-09-25T14:49:00+00:00'
-	}
+	'timestamp': '2020-09-25T16:40:10+00:00'
+  },
+  {
+	'_id': 'I2973',
+	'age': 51,
+	'band': 'Radiohead',
+	'device_id': 'esp8266-device',
+	'name': {
+	  'first': 'Thom',
+	  'last': 'Yorke'
+	},
+	'timestamp': '2020-09-25T14:49:00+00:00'
+  }
 ]
 ```
 <br>

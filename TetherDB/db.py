@@ -142,8 +142,8 @@ class Database(DBBase):
         '''
         query_set = []
 
-        def _queryset_append(document: dict, db_doc: dict) -> None:
-            if document not in query_set:
+        def _queryset_append(db_doc: dict) -> None:
+            if db_doc not in query_set:
                 query_set.append(db_doc)
 
 
@@ -153,11 +153,11 @@ class Database(DBBase):
                 return True
             return False
 
-
+        #BROKEN - doubling call due to kw_items
         def _frozen_compare(keywords: dict, document: dict, db_doc: dict) -> bool:
             if (frozenset(keywords.items()) & frozenset(document.items())
                     == set(keywords.items())):
-                _queryset_append(document, db_doc)
+                _queryset_append(db_doc)
                 return True
             return False
 
@@ -169,10 +169,17 @@ class Database(DBBase):
 
             document_class = Document(db_doc)
             matched_kwargs = {}
+            kw_items = {}
 
-            if _frozen_compare(kwargs, document_class.__dict__, db_doc):
-                continue
             for key, value in kwargs.items():
+                if isinstance(value, list):
+                    kw_items[key] = str(value)
+                else:
+                    kw_items[key] = value
+                if _frozen_compare(kw_items, document_class.__dict__, db_doc):
+                    continue
+
+            for key, value in kw_items.items():
                 if str(value).endswith('*'):
                     match = _wildcard_query(document_class.__dict__, key=key, value=value)
                     if match:

@@ -26,7 +26,9 @@ class DBBase:
 
 class Document:
     '''
-    Document Class
+    Class for taking in a database document(dict) and setting
+    class attributes for nested objects with '__' delimeter for filter
+    functionality.
     '''
     def __init__(self, document):
         self._set_attrs(document)
@@ -53,7 +55,8 @@ class Document:
 
 def load_config():
     '''
-    load_config
+    This function loads configuration file located in TetherDB/config.json
+    to set main Database class properties.
     '''
     with open('TetherDB/config.json') as config_file:
         config = load(config_file)
@@ -69,7 +72,8 @@ def load_config():
 
 def load_db(db_filepath: str, write_mode: str = '') -> any:
     '''
-    load_db
+    This function either loads or overwrites a database file depending
+    on need and access permissions.
     '''
     if write_mode in ('rb', 'r+b', 'w+b'):
         return open(db_filepath, write_mode)
@@ -82,7 +86,8 @@ def load_db(db_filepath: str, write_mode: str = '') -> any:
 
 def generate_id(db_object: any) -> str:
     '''
-    generate_id
+    This function generates a random id for Database documents.
+    Checks if key exists in btree database, if not returns to write.
     '''
     while True:
         _id = ''.join(['I', str(getrandbits(12))])
@@ -95,19 +100,20 @@ def generate_id(db_object: any) -> str:
 
 def add_id(_id: str, document: dict) -> dict:
     '''
-    add_id
+    This function simple adds the key from btree record
+    and adds it to document as '_id' for generator comprehension
+    called in read(query_all=True)
     '''
     document['_id'] = _id.decode()
 
     return document
 
 
-#Try to default to using ntp with backup using time and utc offset
-#add utc offet
 def iso_time(timestamp: int,
              utc_offset: str = '+00:00') -> str:
     '''
-    Makes timestamp for ISO 8601 time
+    This function formats timestamp for ISO8601 time formate from timestamp
+    provided. Optionally takes in a utc_offset(str). Defaults to '+00:00'
     '''
     time_format = list(localtime(timestamp))[0:6]
     for index, date_item in enumerate(time_format):
@@ -122,7 +128,8 @@ def iso_time(timestamp: int,
 
 def time_to_iso(document: dict, utc_offset: str = '') -> dict:
     '''
-    time_to_iso
+    This function is used to inject ISO8601 timestamp into document for read.
+    Time is saved in databse as seconds since MicroPython epoch.
     '''
     if utc_offset:
         document['timestamp'] = iso_time(document['timestamp'],
@@ -134,7 +141,9 @@ def time_to_iso(document: dict, utc_offset: str = '') -> dict:
 
 def tether(db_filepath: str = '', device_id: bool = True):
     '''
-    Decorator that takes in a function that returns dict and writes to database.
+    Decorator that takes in a function that returns dict and writes to 
+    database. Optiionally can specify db_filepath and enable/disable 
+    device_id in document.
     '''
     def wrapper(func):
         def wrapped_function(*args, **kwargs):

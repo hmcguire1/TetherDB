@@ -102,11 +102,12 @@ class Database(DBBase):
 
         if _id and not query_all:
             for doc_id, document in self.db.items():
-                if _id == doc_id.decode() and iso_8601:
-                    if self.utc_offset:
-                        document = time_to_iso(loads(document), self.utc_offset)
-                    else:
-                        document = time_to_iso(loads(document))
+                if _id == doc_id.decode():
+                    if iso_8601:
+                        if self.utc_offset:
+                            document = time_to_iso(loads(document), self.utc_offset)
+                        else:
+                            document = time_to_iso(loads(document))
                     document['_id'] = doc_id.decode()
                     results = document
         elif query_all and not _id:
@@ -159,7 +160,6 @@ class Database(DBBase):
                 _queryset_append(db_doc)
                 return True
             return False
-
 
         for _id, db_doc in (doc for doc in self.db.items()):
             if self.utc_offset:

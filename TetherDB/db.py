@@ -108,7 +108,7 @@ class Database(DBBase):
 
         return '{} documents deleted'.format(documents_deleted)
 
-    def read(self, _id: str = '', iso_8601: bool = True,
+    def read(self, document_id: str = '', iso_8601: bool = True,
              query_all: bool = False) -> any:
         '''
         This method can either retrieve single document with _id(str) param or
@@ -117,11 +117,11 @@ class Database(DBBase):
         '''
         results = None
 
-        if _id and not query_all:
+        if document_id and not query_all:
             for doc_id, document in self.db.items():
                 db_doc = loads(document)
 
-                if _id == doc_id.decode():
+                if document_id == doc_id.decode():
                     if iso_8601:
                         if self.utc_offset:
                             document = time_to_iso(db_doc, self.utc_offset)
@@ -129,7 +129,7 @@ class Database(DBBase):
                             document = time_to_iso(db_doc)
                     document['_id'] = doc_id.decode()
                     results = document
-        elif query_all and not _id:
+        elif query_all and not document_id:
             if iso_8601:
                 if self.utc_offset:
                     results = (

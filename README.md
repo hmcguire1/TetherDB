@@ -16,7 +16,7 @@ Installation
 [rshell - GitHub](https://github.com/dhylands/rshell)
 
 ```sh
-git clone https://github.com/hmcguire1/TetherDB
+git clone https://github.com/hmcguire1/TetherDB.git
 cd TetherDB
 rshell -p /dev/ttyUSB0
 rsync TetherDB /pyboard/TetherDB

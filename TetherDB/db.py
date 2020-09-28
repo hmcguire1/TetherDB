@@ -111,7 +111,7 @@ class Database(DBBase):
     def read(self, document_id: str = '', iso_8601: bool = True,
              query_all: bool = False) -> any:
         '''
-        This method can either retrieve single document with _id(str) param or
+        This method can either retrieve single document with document_id(str) param or
         can also query all documents in database with query_all(bool) param.
         query_all returns a generator or None if 0 records in database.
         '''

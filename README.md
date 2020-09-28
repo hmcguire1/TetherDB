@@ -87,7 +87,7 @@ test_func('Adam Granduciel', 'The War On Drugs', 41)
 &nbsp;&nbsp;*read(document_id: str = '', iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]*
 
 - Reading 1 document via _id returns dict
-- optionally return timestamp in iso8601 format(default) or time since MicroPython epoch(2000-01-01 00:00:00 UTC)
+- Optionally return timestamp in iso8601 format(default) or time since MicroPython epoch(2000-01-01 00:00:00 UTC)
 
 ```python
 #read 1 document :: Returns Dict
@@ -115,10 +115,10 @@ new_db_1.read(query_all=True) :: Returns Generator of all database documents
 
 &nbsp;&nbsp;*filter(\*\*kwargs) → Union[Generator,None]*
 
-- Returns a generator or None if 0 matches found
 - Accepts keyword arguments. Searches documents for all matches as an AND statement
 - Accepts trailing wildcards within string
 - Accepts nested object search via '__' delimeter
+- Returns a generator or None if 0 matches found
 <br>
 
 ```python
@@ -144,13 +144,13 @@ query = new_db_1.filter(age=51)
 # Multiple keywords - Returns same result
 new_db_1.filter(age=51, band='Radiohead')
 
-#wilcard - Returns same result
+#wildcard - Returns same result
 new_db_1.filter(band='Radio*')
 
 #nested - Returns same result
 new_db_1.filter(name__first='Thom')
 
-#wilcard for int
+#wildcard for int
 query = new_db_1.filter(age='5*')
 [i for i in query]
 ```
@@ -208,7 +208,7 @@ new_db_1.cleanup(120)
 >>> '1 documents deleted'
 ```
 
-Additional shorcuts:
+Additional shortcuts:
 ```python
 len(new_db_1) -> int # of documents in database
 new_db_1[<_id>] -> dict # get document with _id

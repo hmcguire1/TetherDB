@@ -86,7 +86,7 @@ test_func('Adam Granduciel', 'The War On Drugs', 41)
 
 &nbsp;&nbsp;*read(document_id: str = '', iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]*
 
-- Reading 1 document via _id returns dict
+- Reading 1 document via document_id(str) argument returns a document(dict)
 - Optionally return timestamp in iso8601 format(default) or time since MicroPython epoch(2000-01-01 00:00:00 UTC)
 
 ```python

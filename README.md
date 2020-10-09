@@ -34,7 +34,7 @@ Database
 &nbsp;&nbsp;*Database(db_filepath: str = 'TetherDB/Tether.db') - > None*
 
 ```python
-from TetherDB.db import Database
+from TetherDB import Database
 new_db_1 = Database() #Default filepath of ('TetherDB/Tether.db')
 new_db_2 = Database('test.db') #root dir
 new_db_3 = Database('TestDir/other_test.db') #parent dirs must exist prior to database file creation
@@ -67,7 +67,7 @@ Database Methods
 new_db_1.write({'name': {'first': 'Thom', 'last': 'Yorke'}, 'age': 51, 'band': 'Radiohead'})
 
 # via decorator
-from TetherDB.utils import tether
+from TetherDB import tether
 
 @tether() # No arguments uses default filepath and device_id added to documents
 def test_func(name: str, band: str, age: int):

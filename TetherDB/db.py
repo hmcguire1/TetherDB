@@ -127,7 +127,7 @@ class Database(DBBase):
                             document = time_to_iso(db_doc, self.utc_offset)
                         else:
                             document = time_to_iso(db_doc)
-                    document['_id'] = doc_id.decode()
+                    document['doc_id'] = doc_id.decode()
                     results = document
         elif query_all and not document_id:
             if iso_8601:
@@ -147,7 +147,7 @@ class Database(DBBase):
                     for doc_id, document in self.db.items()
                 )
         else:
-            print('Provide _id or query_all=True')
+            print('Provide doc_id or query_all=True')
 
         return results
 

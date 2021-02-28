@@ -91,21 +91,21 @@ def generate_id(db_object: any) -> str:
     Checks if key exists in btree database, if not returns to write.
     '''
     while True:
-        _id = ''.join(['I', str(getrandbits(12))])
-        if _id in db_object.keys():
+        doc_id = str(getrandbits(24))
+        if doc_id in db_object.keys():
             generate_id(db_object)
             break
 
-        return _id
+        return doc_id
 
 
-def add_id(_id: str, document: dict) -> dict:
+def add_id(doc_id: str, document: dict) -> dict:
     '''
     This function simple adds the key from btree record
-    and adds it to document as '_id' for generator comprehension
+    and adds it to document as 'doc_id' for generator comprehension
     called in read(query_all=True)
     '''
-    document['_id'] = _id.decode()
+    document['doc_id'] = doc_id.decode()
 
     return document
 

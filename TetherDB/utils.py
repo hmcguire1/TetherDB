@@ -99,13 +99,13 @@ def generate_id(db_object: any) -> str:
         return doc_id
 
 
-def add_id(doc_id: str, document: dict) -> dict:
+def add_id(document_id: int, document: dict) -> dict:
     '''
     This function simple adds the key from btree record
     and adds it to document as 'doc_id' for generator comprehension
     called in read(query_all=True)
     '''
-    document['doc_id'] = doc_id.decode()
+    document['document_id'] = int(document_id.decode())
 
     return document
 

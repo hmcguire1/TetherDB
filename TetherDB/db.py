@@ -39,11 +39,11 @@ class Database(DBBase):
     def __len__(self):
         return self.db_len
 
-    def __getitem__(self, str(doc_id)):
-        return self.read(doc_id)
+    def __getitem__(self, doc_id):
+        return self.read(str(doc_id))
 
     def __delitem__(self, doc_id):
-        return self.delete(doc_id)
+        return self.delete(str(doc_id))
 
     def _db_init(self):
         '''
@@ -84,22 +84,24 @@ class Database(DBBase):
         self.db.flush()
         sleep(0.01)
 
-    def delete(self, doc_id: str = '', drop_all: bool = False) -> str:
+    def delete(self, document_id: int, drop_all: bool = False) -> str:
         '''
         This method can delete a single document with doc_id(int) param or can
         delete all documents in database with drop_all(bool) param.
         Returns str of how many documents deleted.
         '''
-        if doc_id and not drop_all:
+        document_id = str(document_id)
+
+        if document_id and not drop_all:
             try:
-                del self.db[doc_id]
+                del self.db[document_id]
                 self.db.flush()
                 self.db_len -= 1
                 documents_deleted = 1
             except KeyError:
-                return 'doc_id not found'
+                return 'document_id not found'
 
-        elif drop_all and not doc_id:
+        elif drop_all and not document_id:
             documents_deleted = self.db_len
             self.db_len = 0
             self.db.close()
@@ -108,7 +110,7 @@ class Database(DBBase):
 
         return '{} documents deleted'.format(documents_deleted)
 
-    def read(self, document_id: str = '', iso_8601: bool = True,
+    def read(self, document_id: int = 0, iso_8601: bool = True,
              query_all: bool = False) -> any:
         '''
         This method can either retrieve single document with document_id(str) param or
@@ -116,8 +118,12 @@ class Database(DBBase):
         query_all returns a generator or None if 0 records in database.
         '''
         results = None
+        return_message = 'Provide document_id or query_all=True'
         document_id = str(document_id)
+
         if document_id and not query_all:
+            if document_id == 0:
+                return return_message
             for doc_id, document in self.db.items():
                 db_doc = loads(document)
 
@@ -147,7 +153,7 @@ class Database(DBBase):
                     for doc_id, document in self.db.items()
                 )
         else:
-            print('Provide doc_id or query_all=True')
+            print(return_message)
 
         return results
 

@@ -84,14 +84,14 @@ test_func('Adam Granduciel', 'The War On Drugs', 41)
 
 > **Read:**
 
-&nbsp;&nbsp;*read(document_id: str = '', iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]*
+&nbsp;&nbsp;*read(document_id: int = 0, iso_8601: bool = True, query_all: bool = False) → Union[dict, Generator]*
 
-- Reading 1 document via document_id(str) argument returns a document(dict)
+- Reading 1 document via document_id argument returns a document(dict)
 - Optionally return timestamp in iso8601 format(default) or time since MicroPython epoch(2000-01-01 00:00:00 UTC)
 
 ```python
 #read 1 document :: Returns Dict
-new_db_1.read('I2038')
+new_db_1.read(5965830)
 ```
 *output:*
 ```
@@ -101,7 +101,7 @@ new_db_1.read('I2038')
     'last': 'Yorke'
   },
   'device_id': 'esp8266-device',
-  '_id': 'I2973',
+  'document_id': '5965830',
   'band': 'Radiohead',
   'age': 51,
   'timestamp': '2020-09-25T14:49:00+00:00'
@@ -134,7 +134,7 @@ query = new_db_1.filter(age=51)
     'last': 'Yorke'
   },
   'device_id': 'esp8266-device',
-  '_id': 'I2973',
+  'document_id': '5965830',
   'band': 'Radiohead',
   'age': 51,
   'timestamp': '2020-09-25T14:49:00+00:00'
@@ -157,7 +157,7 @@ query = new_db_1.filter(age='5*')
 *output:*
 ```
 [{
-  '_id': 'I2782',
+  '_id': '3430494',
   'band': 'Wilco',
   'device_id': 'esp8266-device',
   'name': {
@@ -168,7 +168,7 @@ query = new_db_1.filter(age='5*')
   'age': 53
 },
 {
-  '_id': 'I2973',
+  '_id': '5965830',
   'band': 'Radiohead',
   'device_id': 'esp8266-device',
   'name': {
@@ -182,14 +182,14 @@ query = new_db_1.filter(age='5*')
 
 > **Delete:**
 
-&nbsp;&nbsp;*delete(_id: str = '', drop_all: bool = False) → str*
+&nbsp;&nbsp;*delete(document_id: int, drop_all: bool = False) → str*
 
 - Delete 1 or all documents in database
 - Returns string message for # of documents deleted
 
 ```python
 # via _id
-new_db_1.delete('I2038')
+new_db_1.delete(5965830)
 >>> '1 documents deleted'
 
 # delete all

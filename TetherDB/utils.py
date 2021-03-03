@@ -105,7 +105,7 @@ def add_id(document_id: int, document: dict) -> dict:
     and adds it to document as 'doc_id' for generator comprehension
     called in read(query_all=True)
     '''
-    document['document_id'] = int(document_id.decode())
+    document['document_id'] = document_id
 
     return document
 

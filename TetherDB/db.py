@@ -119,42 +119,43 @@ class Database(DBBase):
         '''
         results = None
         return_message = 'Provide document_id or query_all=True'
-        document_id = str(document_id)
 
         if document_id and not query_all:
             if document_id == 0:
                 return return_message
             for doc_id, document in self.db.items():
                 db_doc = loads(document)
-
-                if document_id == doc_id.decode():
+                doc_id = int(doc_id.decode())
+                if document_id == doc_id:
                     if iso_8601:
                         if self.utc_offset:
                             document = time_to_iso(db_doc, self.utc_offset)
                         else:
                             document = time_to_iso(db_doc)
-                    document['doc_id'] = doc_id.decode()
+                    document['document_id'] = doc_id
                     results = document
-        elif query_all and not document_id:
+        elif query_all and document_id == 0:
             if iso_8601:
                 if self.utc_offset:
                     results = (
-                        time_to_iso(add_id(doc_id, loads(document)))
+                        time_to_iso(add_id(int(doc_id.decode()), loads(document)))
                         for doc_id, document in self.db.items()
                     )
                 else:
                     results = (
-                        time_to_iso(add_id(doc_id, loads(document)), self.utc_offset)
+                        time_to_iso(add_id(int(doc_id.decode()), loads(document)), self.utc_offset)
                         for doc_id, document in self.db.items()
                     )
             else:
                 results = (
-                    add_id(doc_id, loads(document))
+                    add_id(int(doc_id.decode()), loads(document))
                     for doc_id, document in self.db.items()
                 )
         else:
             print(return_message)
 
+        if not results:
+            return 'No Documents found matching given document_id'
         return results
 
     def filter(self, **kwargs) -> any:

@@ -39,11 +39,11 @@ class Database(DBBase):
     def __len__(self):
         return self.db_len
 
-    def __getitem__(self, _id):
-        return self.read(_id)
+    def __getitem__(self, str(doc_id)):
+        return self.read(doc_id)
 
-    def __delitem__(self, _id):
-        return self.delete(_id)
+    def __delitem__(self, doc_id):
+        return self.delete(doc_id)
 
     def _db_init(self):
         '''
@@ -73,33 +73,33 @@ class Database(DBBase):
         if not isinstance(document, dict):
             raise TypeError("Invalid type. Document must be of type 'dict'.")
 
-        _id = generate_id(self.db)
+        doc_id = generate_id(self.db)
         document.update(timestamp=time())
 
         if device_id:
             document.update(device_id=self.device_id)
 
-        self.db.put(_id, dumps(document).encode())
+        self.db.put(doc_id, dumps(document).encode())
         self.db_len += 1
         self.db.flush()
         sleep(0.01)
 
-    def delete(self, _id: str = '', drop_all: bool = False) -> str:
+    def delete(self, doc_id: str = '', drop_all: bool = False) -> str:
         '''
-        This method can delete a single document with _id(int) param or can
+        This method can delete a single document with doc_id(int) param or can
         delete all documents in database with drop_all(bool) param.
         Returns str of how many documents deleted.
         '''
-        if _id and not drop_all:
+        if doc_id and not drop_all:
             try:
-                del self.db[_id]
+                del self.db[doc_id]
                 self.db.flush()
                 self.db_len -= 1
                 documents_deleted = 1
             except KeyError:
-                return '_id not found'
+                return 'doc_id not found'
 
-        elif drop_all and not _id:
+        elif drop_all and not doc_id:
             documents_deleted = self.db_len
             self.db_len = 0
             self.db.close()
@@ -116,7 +116,7 @@ class Database(DBBase):
         query_all returns a generator or None if 0 records in database.
         '''
         results = None
-
+        document_id = str(document_id)
         if document_id and not query_all:
             for doc_id, document in self.db.items():
                 db_doc = loads(document)
@@ -180,11 +180,11 @@ class Database(DBBase):
                 return True
             return False
 
-        for _id, db_doc in (doc for doc in self.db.items()):
+        for doc_id, db_doc in (doc for doc in self.db.items()):
             if self.utc_offset:
-                db_doc = time_to_iso(add_id(_id, loads(db_doc)), self.utc_offset)
+                db_doc = time_to_iso(add_id(doc_id, loads(db_doc)), self.utc_offset)
             else:
-                db_doc = time_to_iso(add_id(_id, loads(db_doc)))
+                db_doc = time_to_iso(add_id(doc_id, loads(db_doc)))
 
             document_class = Document(db_doc)
             matched_kwargs = {}
@@ -226,9 +226,9 @@ class Database(DBBase):
 
         documents_deleted = 0
 
-        for _id, document in self.db.items():
+        for doc_id, document in self.db.items():
             if time() - loads(document)['timestamp'] >= seconds:
-                del self.db[_id]
+                del self.db[doc_id]
                 self.db_len -= 1
                 documents_deleted += 1
 

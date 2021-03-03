@@ -54,7 +54,7 @@ class Document:
                     setattr(self, key, value)
 
 
-def load_config():
+def load_config() -> dict:
     '''
     This function loads configuration file located in TetherDB/config.json
     to set main Database class properties.

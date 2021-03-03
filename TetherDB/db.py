@@ -189,9 +189,9 @@ class Database(DBBase):
 
         for doc_id, db_doc in (doc for doc in self.db.items()):
             if self.utc_offset:
-                db_doc = time_to_iso(add_id(int(doc_id.decode(), loads(db_doc)), self.utc_offset)
+                db_doc = time_to_iso(add_id(int(doc_id.decode()), loads(db_doc)), self.utc_offset)
             else:
-                db_doc = time_to_iso(add_id(int(doc_id.decode(), loads(db_doc)))
+                db_doc = time_to_iso(add_id(int(doc_id.decode()), loads(db_doc)))
 
             document_class = Document(db_doc)
             matched_kwargs = {}

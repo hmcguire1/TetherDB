@@ -2,7 +2,7 @@
 Database module for TetherDB
 '''
 import re
-from os import listdir
+from os import listdir, getcwd
 from json import loads, dumps
 from time import time, sleep
 
@@ -73,13 +73,13 @@ class Database(DBBase):
         if not isinstance(document, dict):
             raise TypeError("Invalid type. Document must be of type 'dict'.")
 
-        doc_id = generate_id(self.db)
+        doc_id = generate_id()
         document.update(timestamp=time())
 
         if device_id:
             document.update(device_id=self.device_id)
 
-        self.db.put(doc_id, dumps(document).encode())
+        self.db.put(str(doc_id), dumps(document).encode())
         self.db_len += 1
         self.db.flush()
         sleep(0.01)

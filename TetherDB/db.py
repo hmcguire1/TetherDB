@@ -73,18 +73,21 @@ class Database(DBBase):
         if not isinstance(document, dict):
             raise TypeError("Invalid type. Document must be of type 'dict'.")
 
-        doc_id = generate_id()
+        doc_id = str(generate_id())
         document.update(timestamp=time())
 
         if device_id:
             document.update(device_id=self.device_id)
 
-        self.db.put(str(doc_id), dumps(document).encode())
+        self.db.put(doc_id, dumps(document).encode())
+        with open(''.join((getcwd(), "/document_id.idx")), 'a') as idx:
+            idx.write(doc_id)
+
         self.db_len += 1
         self.db.flush()
         sleep(0.01)
 
-    def delete(self, document_id: int, drop_all: bool = False) -> str:
+    def delete(self, document_id: int = 0, drop_all: bool = False) -> str:
         '''
         This method can delete a single document with doc_id(int) param or can
         delete all documents in database with drop_all(bool) param.
@@ -101,7 +104,7 @@ class Database(DBBase):
             except KeyError:
                 return 'document_id not found'
 
-        elif drop_all and not document_id:
+        elif drop_all and document_id != 0:
             documents_deleted = self.db_len
             self.db_len = 0
             self.db.close()

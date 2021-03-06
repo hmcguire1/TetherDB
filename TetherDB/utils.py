@@ -85,21 +85,21 @@ def load_db(db_filepath: str, write_mode: str = '') -> any:
 
     return None
 
-#TODO 
+#TODO
 'Make this async and await on writing to idx'
-def generate_id(document_id_idx_path: str) -> int:
+def generate_id() -> int:
     '''
     This function generates a random id for Database documents.
     Checks if key exists in btree database, if not returns to write.
     '''
     while True:
         doc_id = getrandbits(24)
-        with open(''.join(getcwd(), '/document_id.idx'), 'r') as idx:
+        #MAybe change to use db_filepath someway
+        with open(''.join((getcwd(), "/document_id.idx")), 'r') as idx:
             for document_id in idx:
                 if document_id == doc_id:
                     generate_id()
-                else:
-                    continue
+
                 return doc_id
 
 def add_id(document_id: int, document: dict) -> dict:
